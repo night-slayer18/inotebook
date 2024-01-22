@@ -100,4 +100,35 @@ router.post("/getuser",fetchuser, async (req, res) => {
     res.status(500).send("Internal Server error occured");
   }
 });
+
+router.post("/updatepassword",fetchuser, 
+  async (req, res) => {
+    const {oldPassword, newPassword} = req.body;
+    try {
+      let user = await User.findById(req.user.id);
+      if (!user) {
+        return res
+          .status(400)
+          .json({ error: "Please try to login with correct credentials" });
+      }
+      if(user.id.toString() !== req.user.id){
+        return res.status(401).send("Authorisation failed");
+      }
+      const passwordCompare = await bcrypt.compare(oldPassword, user.password);
+      if (!passwordCompare) {
+        return res
+          .status(400)
+          .json({ error: "Please try to login with correct credentials" });
+      }
+      const salt = await bcrypt.genSalt(10);
+      securePassword = await bcrypt.hash(newPassword, salt);
+      user.password = securePassword;
+      const result = await user.save();
+      res.send({"message":"Password updated successfully", result});
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Internal Server error occured");
+    }
+  }
+);
 module.exports = router;
