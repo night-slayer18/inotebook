@@ -5,7 +5,7 @@ const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const fetchuser = require("../middleware/fetchuser");
-require("dotenv").config();
+require("dotenv").config({ path: './backend/.env' });
 
 // Create a user using: POST "/api/auth/createuser". Doesn't require Auth
 router.post(
