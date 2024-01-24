@@ -35,7 +35,7 @@ const AddNotes = () => {
               <input type="text" name='tag' className="form-control" id="tag" aria-describedby="tag1" onChange={onChange}/>
               <div id="tag1" className="form-text">Enter Your Tag</div>
             </div>
-            <button type="submit" className="btn btn-primary" onClick={handleClick}>Submit</button>
+            <button type="submit" className="btn btn-primary" onClick={handleClick}>Add Note</button>
           </form>
         </div>
     </div>
