@@ -5,7 +5,9 @@ const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const fetchuser = require("../middleware/fetchuser");
-require("dotenv").config({ path: './backend/.env' });
+// require("dotenv").config({ path: './backend/.env' });
+require("dotenv").config();
+
 
 // Create a user using: POST "/api/auth/createuser". Doesn't require Auth
 router.post(
@@ -16,14 +18,15 @@ router.post(
     body("password").isLength({ min: 8 }),
   ],
   async (req, res) => {
+    let success = false;
     const result = validationResult(req);
     if (!result.isEmpty()) {
-      return res.status(400).json({ errors: result.array() });
+      return res.status(400).json({success, errors: result.array() });
     }
     try {
       let user = await User.findOne({ email: req.body.email });
       if (user) {
-        return res.status(400).json({ error: "Email already exist" });
+        return res.status(400).json({success, error: "Email already exist" });
       }
       const salt = await bcrypt.genSalt(10);
       securePassword = await bcrypt.hash(req.body.password, salt);
@@ -39,7 +42,8 @@ router.post(
         },
       };
       const authToken = jwt.sign(data, process.env.JWT_SECRET);
-      res.json({ authToken });
+      success = true;
+      res.json({success, authToken });
     } catch (error) {
       console.log(error);
       res.status(500).send("Internal Server error occured");
@@ -55,6 +59,7 @@ router.post(
     body("password", "Password cannot be blank").exists(),
   ],
   async (req, res) => {
+    let success = false;
     const result = validationResult(req);
     if (!result.isEmpty()) {
       return res.status(400).json({ errors: result.array() });
@@ -65,13 +70,13 @@ router.post(
       if (!user) {
         return res
           .status(400)
-          .json({ error: "Please try to login with correct credentials" });
+          .json({success, error: "Please try to login with correct credentials" });
       }
       const passwordCompare = await bcrypt.compare(password, user.password);
       if (!passwordCompare) {
         return res
           .status(400)
-          .json({ error: "Please try to login with correct credentials" });
+          .json({success, error: "Please try to login with correct credentials" });
       }
 
       const data = {
@@ -81,7 +86,8 @@ router.post(
       };
 
       const authToken = jwt.sign(data, process.env.JWT_SECRET);
-      res.json({ authToken });
+      success = true;
+      res.json({success,authToken });
     } catch (error) {
       console.log(error);
       res.status(500).send("Internal Server error occured");
