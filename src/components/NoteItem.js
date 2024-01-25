@@ -36,8 +36,7 @@ const NoteItem = (props) => {
               <p className="card-text">{props.note.description}</p>
               <p className="card-text">{props.note.tag}</p>
               <button onClick={()=>{props.updateNote(props.note)}} className="btn btn-success mx-2 my-2">Edit <i className="bi bi-pencil-square"></i></button>
-              <button onClick={()=>{deleteNote(props.note._id)}} className="btn btn-danger mx-2 my-2">Delete <i className="bi bi-x-octagon"></i></button>
-              <ToastContainer/>
+              <button onClick={()=>{deleteNote(props.note._id);props.showAlert("Deleted Successfully","success");}} className="btn btn-danger mx-2 my-2">Delete <i className="bi bi-x-octagon"></i></button>
           </div>
       </div>
     </div>

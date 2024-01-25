@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const Signup = () => {
+const Signup = (props) => {
   const [credentials, setcredentials] = useState({name:"",email:"",password:"",confirmpassword:""})
   const {name, email, password,confirmpassword} = credentials;
   let history = useNavigate();
@@ -17,7 +17,9 @@ const Signup = () => {
     })
     const json = await response.json();
     if(json.success){
+      // Save the auth token and redirect
       history("/login");
+      props.showAlert("Account Created Successfully","success")
     }
   }
 
@@ -27,6 +29,7 @@ const Signup = () => {
 
   return (
     <div className="container my-5" style={{width:'40rem'}}>
+      <h2 className="my-5">Signup to continue to iNotebook</h2>
       <form onSubmit={handleSubmit}>
       <div className="mb-3">
           <label htmlFor="name" className="form-label">Name</label>
