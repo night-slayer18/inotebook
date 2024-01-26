@@ -19,7 +19,7 @@ const Signup = (props) => {
     if(json.success){
       // Save the auth token and redirect
       history("/login");
-      props.showAlert("Account Created Successfully","success")
+      props.signUpToast()
     }
   }
 

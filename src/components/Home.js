@@ -2,10 +2,10 @@ import React from 'react'
 import Notes from './Notes';
 
 const Home = (props) => {
-  const {showAlert}=props;
+  const {deleteNoteToast,updateNoteToast,addNoteToast}=props;
   return (
     <div>
-        <Notes showAlert={showAlert}/>
+        <Notes deleteNoteToast={deleteNoteToast} updateNoteToast={updateNoteToast} addNoteToast={addNoteToast}/>
     </div>
   )
 }
