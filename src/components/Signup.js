@@ -43,11 +43,11 @@ const Signup = (props) => {
         </div>
         <div className="mb-3">
           <label htmlFor="password" className="form-label">Password</label>
-          <input value ={password} onChange={onChange} type="password" className="form-control" id="password" name='password'required minLength={5}/>
+          <input value ={password} onChange={onChange} type="password" className="form-control" id="password" name='password'required minLength={8}/>
         </div>
         <div className="mb-3">
           <label htmlFor="confirmpassword" className="form-label">Confirm Password</label>
-          <input value ={confirmpassword} onChange={onChange} type="password" className="form-control" id="confirmpassword" name='confirmpassword' required minLength={5}/>
+          <input value ={confirmpassword} onChange={onChange} type="password" className="form-control" id="confirmpassword" name='confirmpassword' required minLength={8}/>
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>

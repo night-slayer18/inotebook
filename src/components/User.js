@@ -61,7 +61,7 @@ const User = (props) => {
         </div>
         <div className="modal-footer">
             <button ref = {closeref} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button disabled={password.opass.length<5 && password.npass.length<5} onClick={updatePass} type="button" className="btn btn-primary">Update Password</button>
+            <button disabled={password.opass.length<8 && password.npass.length<8} onClick={updatePass} type="button" className="btn btn-primary">Update Password</button>
         </div>
         </div>
     </div>
