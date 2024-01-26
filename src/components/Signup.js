@@ -18,6 +18,8 @@ const Signup = (props) => {
     const json = await response.json();
     if(json.success){
       // Save the auth token and redirect
+      localStorage.setItem('name', json.username);
+      localStorage.setItem('email', json.useremail)
       history("/login");
       props.signUpToast()
     }

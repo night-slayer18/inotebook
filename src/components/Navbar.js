@@ -46,7 +46,10 @@ const Navbar = (props) => {
             <Link className="btn btn-primary mx-2 my-2" to="/signup" role="button">
               Signup
             </Link>
-          </div>:<div className="d-flex">
+          </div>:<div className="d-flex align-items-center">
+            <Link to="/user" className="btn btn-primary rounded-circle mx-2 my-2" style={{ width: '40px', height: '40px' }}>
+              <i className="bi bi-person-fill" ></i>
+            </Link>
             <button onClick={handleLogout} className="btn btn-danger mx-2 my-2">
               Logout
             </button>

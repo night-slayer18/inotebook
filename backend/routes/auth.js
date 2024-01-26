@@ -30,7 +30,7 @@ router.post(
       }
       const salt = await bcrypt.genSalt(10);
       securePassword = await bcrypt.hash(req.body.password, salt);
-
+      let [username, useremail] = [req.body.name, req.body.email];
       user = await User.create({
         name: req.body.name,
         email: req.body.email,
@@ -43,7 +43,7 @@ router.post(
       };
       const authToken = jwt.sign(data, process.env.JWT_SECRET);
       success = true;
-      res.json({success, authToken });
+      res.json({success, authToken,username,useremail});
     } catch (error) {
       console.log(error);
       res.status(500).send("Internal Server error occured");
@@ -110,12 +110,13 @@ router.post("/getuser",fetchuser, async (req, res) => {
 router.post("/updatepassword",fetchuser, 
   async (req, res) => {
     const {oldPassword, newPassword} = req.body;
+    let success = false;
     try {
       let user = await User.findById(req.user.id);
       if (!user) {
         return res
           .status(400)
-          .json({ error: "Please try to login with correct credentials" });
+          .json({ error: "Please try to login with correct credentials",success });
       }
       if(user.id.toString() !== req.user.id){
         return res.status(401).send("Authorisation failed");
@@ -124,13 +125,14 @@ router.post("/updatepassword",fetchuser,
       if (!passwordCompare) {
         return res
           .status(400)
-          .json({ error: "Please try to login with correct credentials" });
+          .json({ error: "Please try to login with correct credentials",success });
       }
       const salt = await bcrypt.genSalt(10);
       securePassword = await bcrypt.hash(newPassword, salt);
       user.password = securePassword;
       const result = await user.save();
-      res.send({"message":"Password updated successfully", result});
+      success=true;
+      res.send({"message":"Password updated successfully",success});
     } catch (error) {
       console.log(error);
       res.status(500).send("Internal Server error occured");

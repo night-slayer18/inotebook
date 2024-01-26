@@ -11,6 +11,7 @@ import NoteState from './context/notes/NoteState';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import toast, { Toaster } from 'react-hot-toast';
+import User from './components/User';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
   const logInToast = () => toast.success("Logged In Successfully");
   const signUpToast = () => toast.success("Signed Up Successfully");
   const logOutToast = () => toast.success("Logged Out Successfully");
+  const passwordUpdated = () => toast.success("Password Updated Successfully");
 
   return (
     <>
@@ -34,6 +36,7 @@ function App() {
             <Route exact path="/about" element={<About/>}/>
             <Route exact path="/login" element={<Login logInToast={logInToast} invalidCred={invalidCred}/>}/>
             <Route exact path="/signup" element={<Signup signUpToast={signUpToast}/>}/>
+            <Route exact path="/user" element={<User passwordUpdated={passwordUpdated} invalidCred={invalidCred}/>}/>
           </Routes>
         </div>
       </BrowserRouter>
