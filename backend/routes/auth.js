@@ -29,7 +29,7 @@ router.post(
         return res.status(400).json({success, error: "Email already exist" });
       }
       const salt = await bcrypt.genSalt(10);
-      securePassword = await bcrypt.hash(req.body.password, salt);
+      const securePassword = await bcrypt.hash(req.body.password, salt);
       let [username, useremail] = [req.body.name, req.body.email];
       user = await User.create({
         name: req.body.name,
@@ -128,7 +128,7 @@ router.post("/updatepassword",fetchuser,
           .json({ error: "Please try to login with correct credentials",success });
       }
       const salt = await bcrypt.genSalt(10);
-      securePassword = await bcrypt.hash(newPassword, salt);
+      const securePassword = await bcrypt.hash(newPassword, salt);
       user.password = securePassword;
       const result = await user.save();
       success=true;
