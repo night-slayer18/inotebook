@@ -139,4 +139,34 @@ router.post("/updatepassword",fetchuser,
     }
   }
 );
+
+router.post("/updateuser",fetchuser, 
+  async (req, res) => {
+    const {name, email} = req.body;
+    let success = false;
+    try {
+      let user = await User.findById(req.user.id);
+      if (!user) {
+        return res
+          .status(400)
+          .json({ error: "Please try to login with correct credentials",success });
+      }
+      if(user.id.toString() !== req.user.id){
+        return res.status(401).send("Authorisation failed");
+      }
+      let dub = await User.findOne({ email: email });
+      if (dub) {
+        return res.status(400).json({success, error: "Email already exist" });
+      }
+      user.name = name;
+      user.email = email;
+      const result = await user.save();
+      success=true;
+      res.send({"message":"User updated successfully",success});
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Internal Server error occured");
+    }
+  }
+);
 module.exports = router;
